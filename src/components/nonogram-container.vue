@@ -1,8 +1,12 @@
 <template>
-  <div class="front-page">
-    <clues position="top" :game="nonogram"></clues>
-    <clues position="side" :game="nonogram"></clues>
-    <game-board :game="nonogram"></game-board>
+  <div class="center">
+    <div class="game-container">
+      <clues position="top" :game="nonogram"></clues>
+      <div class="game-and-side-clues">
+        <clues position="side" :game="nonogram"></clues>
+        <game-board :game="nonogram"></game-board>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -49,7 +53,18 @@ export default {
 </script>
 
 <style scoped>
-.front-page {
- 
+.center {
+  display: inline-block;
+  margin: auto;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.game-and-side-clues {
+  display: flex;
 }
 </style>
