@@ -1,29 +1,32 @@
 <template>
-  <div>
-    <form @submit="makeNew">
-      <input
-        type="text"
-        v-model="testInput"
-        autofocus
-        class="inp">
-      <input type="submit">
-    </form>
-    <ul>
-      <li v-for="input in nonograms">{{ input.text }}</li>
-    </ul>
+  <div class="front-page">
+    <clues position="top" :game="nonogram"></clues>
+    <clues position="side" :game="nonogram"></clues>
+    <game-board :game="nonogram"></game-board>
   </div>
 </template>
 
 <script>
 import firebaseService from '../services/firebase-service';
+import Clues from './clues';
+import GameBoard from './game-board';
 
 const nonogramsRef = firebaseService.db.ref('nonograms');
+
+const nonogram = [
+  [0, 1, 0, 1, 0],
+  [0, 1, 0, 1, 0],
+  [0, 1, 1, 1, 0],
+  [0, 1, 0, 1, 0],
+  [0, 1, 0, 1, 0],
+];
 
 export default {
   name: 'nonogram-container',
   data() {
     return {
       testInput: '',
+      nonogram,
     };
   },
   firebase: {
@@ -38,13 +41,15 @@ export default {
       this.testInput = '';
     },
   },
+  components: {
+    Clues,
+    GameBoard,
+  },
 };
 </script>
 
 <style scoped>
-.inp {
-  text-align: center;
-  padding: 0.6em;
-  font-size: 1.6em;
+.front-page {
+ 
 }
 </style>
