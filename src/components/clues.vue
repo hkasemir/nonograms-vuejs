@@ -16,15 +16,15 @@ import nonogramHelper from '../utils/nonogram-helper';
 
 export default {
   name: 'clues',
-  data() {
-    return {
-      cluesArray: nonogramHelper.composeClues(this.game, this.position),
-    };
-  },
   props: [
     'position',
     'game',
   ],
+  computed: {
+    cluesArray() {
+      return nonogramHelper.composeClues(this.game, this.position);
+    },
+  },
 };
 </script>
 

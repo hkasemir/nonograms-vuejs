@@ -14,7 +14,7 @@ function getTopClues(solution) {
       if (cell) {
         consecutive += 1;
       }
-      if (rowIndex === row.length - 1) {
+      if (rowIndex === solution.length - 1) {
         if (consecutive || !columnClues.length) {
           columnClues.push(consecutive);
         }
@@ -70,5 +70,18 @@ export default {
       default:
         return new Array(solution.length).fill(new Array(solution[0].length).fill(0));
     }
+  },
+  getBoardSizeOptions() {
+    return [
+      '5x5',
+      '5x10',
+      '10x10',
+      '10x15',
+      '15x15',
+    ];
+  },
+  createBlankBoard(boardSize) {
+    const [height, width] = boardSize.split('x');
+    return new Array(parseInt(height, 10)).fill(new Array(parseInt(width, 10)).fill(0));
   },
 };

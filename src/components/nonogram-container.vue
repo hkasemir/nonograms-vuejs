@@ -9,6 +9,9 @@
         </div>
       </div>
     </div>
+    <select v-model="boardSize" class="board-size-selector" @change="updateBoardSize">
+      <option v-for="option in boardSizeOptions">{{ option }}</option>
+    </select>
     <create-game-form :game="nonogram"></create-game-form>
   </div>
 </template>
@@ -18,22 +21,18 @@ import firebaseService from '../services/firebase-service';
 import Clues from './clues';
 import GameBoard from './game-board';
 import CreateGameForm from './create-game-form';
+import nonogramHelper from '../utils/nonogram-helper';
 
 const nonogramsRef = firebaseService.db.ref('nonograms');
-
-const nonogram = [
-  [0, 1, 0, 1, 0],
-  [0, 1, 0, 1, 0],
-  [0, 1, 1, 1, 0],
-  [0, 1, 0, 1, 0],
-  [0, 1, 0, 1, 0],
-];
+const defaultBoardSize = '5x5';
 
 export default {
   name: 'nonogram-container',
   data() {
     return {
-      nonogram,
+      boardSize: defaultBoardSize,
+      nonogram: nonogramHelper.createBlankBoard(defaultBoardSize),
+      boardSizeOptions: nonogramHelper.getBoardSizeOptions(),
     };
   },
   firebase: {
@@ -44,12 +43,18 @@ export default {
     GameBoard,
     CreateGameForm,
   },
+  methods: {
+    updateBoardSize(evt) {
+      this.nonogram = nonogramHelper.createBlankBoard(evt.target.value);
+    },
+  },
 };
 </script>
 
 <style scoped>
 .presentation {
   display: flex;
+  align-items: center;
   flex-direction: column;
 }
 
@@ -66,5 +71,10 @@ export default {
 
 .game-and-side-clues {
   display: flex;
+}
+
+.board-size-selector {
+  width: 10em;
+  margin-top: 2em;
 }
 </style>
