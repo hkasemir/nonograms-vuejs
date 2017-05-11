@@ -5,7 +5,7 @@
         <clues position="top" :game="nonogram"></clues>
         <div class="game-and-side-clues">
           <clues position="side" :game="nonogram"></clues>
-          <game-board :game="nonogram"></game-board>
+          <game-board :game.sync="nonogram"></game-board>
         </div>
       </div>
     </div>
@@ -22,16 +22,23 @@ import Clues from './clues';
 import GameBoard from './game-board';
 import CreateGameForm from './create-game-form';
 import nonogramHelper from '../utils/nonogram-helper';
+import store from '../store';
 
 const nonogramsRef = firebaseService.db.ref('nonograms');
 const defaultBoardSize = '5x5';
 
+const nonogram = [
+  [1, 0, 1],
+  [0, 1, 0],
+];
+
 export default {
   name: 'nonogram-container',
+  store,
   data() {
     return {
       boardSize: defaultBoardSize,
-      nonogram: nonogramHelper.createBlankBoard(defaultBoardSize),
+      nonogram,
       boardSizeOptions: nonogramHelper.getBoardSizeOptions(),
     };
   },
