@@ -1,6 +1,7 @@
-# scramble-vuejs
+# nonograms-vuejs
 
-> A scramble word game using vue.js 
+> A nonogram generator and playing platform build using vuejs and firebase.
+on my [github-page](https://hkasemir.github.io/nonograms-vuejs/)
 
 ## Build Setup
 
