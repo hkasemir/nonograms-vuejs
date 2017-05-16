@@ -2,48 +2,44 @@
   <div class="presentation">
     <div class="center">
       <div class="game-container">
-        <clues position="top" :game="nonogram"></clues>
+        <clues position="top"></clues>
         <div class="game-and-side-clues">
-          <clues position="side" :game="nonogram"></clues>
-          <game-board :game.sync="nonogram"></game-board>
+          <clues position="side"></clues>
+          <game-board></game-board>
         </div>
       </div>
     </div>
     <select v-model="boardSize" class="board-size-selector" @change="updateBoardSize">
       <option v-for="option in boardSizeOptions">{{ option }}</option>
     </select>
-    <create-game-form :game="nonogram"></create-game-form>
+    <create-game-form></create-game-form>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import firebaseService from '../services/firebase-service';
 import Clues from './clues';
 import GameBoard from './game-board';
 import CreateGameForm from './create-game-form';
 import nonogramHelper from '../utils/nonogram-helper';
-import store from '../store';
 
 const nonogramsRef = firebaseService.db.ref('nonograms');
 const defaultBoardSize = '5x5';
 
-const nonogram = [
-  [1, 0, 1],
-  [0, 1, 0],
-];
-
 export default {
   name: 'nonogram-container',
-  store,
   data() {
     return {
       boardSize: defaultBoardSize,
-      nonogram,
       boardSizeOptions: nonogramHelper.getBoardSizeOptions(),
     };
   },
   firebase: {
     nonograms: nonogramsRef,
+  },
+  created() {
+    this.setNonogram({ nonogram: nonogramHelper.createBlankBoard('5x5') });
   },
   components: {
     Clues,
@@ -51,8 +47,11 @@ export default {
     CreateGameForm,
   },
   methods: {
+    ...mapActions([
+      'setNonogram',
+    ]),
     updateBoardSize(evt) {
-      this.nonogram = nonogramHelper.createBlankBoard(evt.target.value);
+      this.setNonogram({ nonogram: nonogramHelper.createBlankBoard(evt.target.value) });
     },
   },
 };
@@ -67,7 +66,6 @@ export default {
 
 .center {
   display: inline-block;
-  margin: auto;
 }
 
 .game-container {

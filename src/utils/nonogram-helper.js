@@ -82,6 +82,7 @@ export default {
   },
   createBlankBoard(boardSize) {
     const [height, width] = boardSize.split('x');
-    return new Array(parseInt(height, 10)).fill(new Array(parseInt(width, 10)).fill(0));
+    const rows = new Array(parseInt(height, 10)).fill(true);
+    return rows.map(() => new Array(parseInt(width, 10)).fill(0));
   },
 };

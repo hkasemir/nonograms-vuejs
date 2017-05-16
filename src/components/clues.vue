@@ -18,11 +18,10 @@ export default {
   name: 'clues',
   props: [
     'position',
-    'game',
   ],
   computed: {
     cluesArray() {
-      return nonogramHelper.composeClues(this.game, this.position);
+      return nonogramHelper.composeClues(this.$store.state.nonogram, this.position);
     },
   },
 };

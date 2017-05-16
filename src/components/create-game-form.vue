@@ -15,9 +15,9 @@ export default {
   data() {
     return {
       gameName: '',
+      game: this.$store.state.nonogram,
     };
   },
-  props: ['game'],
   firebase: {
     nonograms: nonogramsRef,
   },

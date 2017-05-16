@@ -3,27 +3,24 @@
     <div v-for="(row, rowIndex) in game" class="row">
       <game-cell
         v-for="(cell, cellIndex) in row"
-        :filled="cell" @update:filled="updateNonogram({ rowIndex, cellIndex })"></game-cell>
+        :rowIndex="rowIndex"
+        :cellIndex="cellIndex"></game-cell>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
 import GameCell from './game-cell';
 
 export default {
   name: 'game-board',
-  props: [
-    'game',
-  ],
+  computed: {
+    game() {
+      return this.$store.state.nonogram;
+    },
+  },
   components: {
     GameCell,
-  },
-  methods: {
-    ...mapActions([
-      'updateNonogram',
-    ]),
   },
 };
 </script>

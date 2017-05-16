@@ -8,11 +8,13 @@
 import vueFire from 'vuefire';
 import Vue from 'vue';
 import NonogramContainer from './components/nonogram-container';
+import store from './store';
 
 Vue.use(vueFire);
 
 export default {
   name: 'app',
+  store,
   components: {
     NonogramContainer,
   },
